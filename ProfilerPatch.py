@@ -21,9 +21,9 @@ def __patched_call__(self, econtext):
     name = self._patching_class._get_name(econtext)
     if enable[0] and name and not name.find(os.path.dirname(__file__)) > -1:
         expr = self._patching_class._get_expr(self)
-        starttime = time.time()
+        starttime = time.clock()
         ret = self._patching_class._org_method(self, econtext)
-        profile_container.expr_hit(name, expr, time.time() - starttime)
+        profile_container.expr_hit(name, expr, time.clock() - starttime)
     else:
         # not a pagetemplate or one of the profiler's pts, or profiling is disabled, so don't time
         ret = self._patching_class._org_method(self, econtext)
@@ -61,11 +61,11 @@ def __patched_render__(self, source=0, extra_context={}):
     name = self._patching_class._get_name(self)
     # don't profile if profiling is disabled and don't profile our own pts
     if enable[0] and not name.find(os.path.dirname(__file__)) > -1:
-        starttime = time.time()
+        starttime = time.clock()
         try:
             ret = self._patching_class._org_method(self, source, extra_context)
         finally:
-            profile_container.pt_hit(name, time.time() - starttime)
+            profile_container.pt_hit(name, time.clock() - starttime)
     else:
         ret = self._patching_class._org_method(self, source, extra_context)
 
