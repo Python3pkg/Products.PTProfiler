@@ -6,7 +6,7 @@ Meta::
   Valid for:  PTProfiler
   Author:     Guido Wesdorp
   Email:      guido@infrae.com
-  CVS:        $Revision: 1.1 $
+  CVS:        $Revision: 1.2 $
 
 PTProfiler was developed by the Infrae team.
 
@@ -24,3 +24,7 @@ External developers:
   Holger Krekel <hpk@devel.trillke.net>
   Clemens Klein-Robbenhaar <robbenhaar@espresto.com>
   Alexander Limi <alexander@limi.net>
+
+Thanks to:
+
+  Heimo Laukkanen for his positive feedback ;)
