@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.6 $
+Version of this file: $Revision: 1.7 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -54,7 +54,7 @@ View the results of the PTProfiler for a single document. You see the time it ta
 </p>
 
 <tal:block condition="python: not request.has_key('tmp')">
-<tal:comment condition="nothing"> Show a list of all profiled pts</tal:comment>
+<tal:comment condition="nothing"> Show a list of all profiled pts </tal:comment>
 <table width="100%" border="1">
 <tr>
     <th>Template</th>
@@ -76,6 +76,7 @@ View the results of the PTProfiler for a single document. You see the time it ta
 </tal:block>
 
 <tal:block condition="python: request.has_key('tmp')">
+<tal:comment condition="nothing"> Show a list of all TAL expressions </tal:comment>
 <tal:define define="result python:view.result_sorted_by_time(request['tmp']); tmp request/tmp">
 <table width="100%" border="1">
 <tr>
@@ -108,10 +109,13 @@ View the results of the PTProfiler for a single document. You see the time it ta
     <td class="form-element" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
 </tr>
 <tr tal:repeat="expr result">
-    <td class="form-element" tal:content="python: expr[0]">Expression</td>
-    <td class="form-element" tal:content="python: round(expr[1], 4)">Total time</td>
-    <td class="form-element" tal:content="python: expr[2]">Total calls</td>
-    <td class="form-element" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
+    <tal:block define="colors python:{'python': 'purple', 'path': 'blue', 'string': 'green'}; 
+                        color python:test(expr[0].find(':') > -1, colors.get(expr[0].split(':')[0], 'black'), 'noexpr')">
+        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: expr[0]">Expression</td>
+        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1], 4)">Total time</td>
+        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: expr[2]">Total calls</td>
+        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
+    </tal:block>
 </tr>
 </table>
 </tal:define>
