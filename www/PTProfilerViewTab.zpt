@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.5 $
+Version of this file: $Revision: 1.6 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -86,7 +86,7 @@ View the results of the PTProfiler for a single document. You see the time it ta
 </tr>
 <tr>
     <td style="font-weight: bold;" class="form-text">
-        Total rendering time
+        Total rendering time pagetemplate
     </td>
     <td style="font-weight: bold;" class="form-text"
         tal:content="python: round(view.total_rendering_time(tmp), 4)">
@@ -100,6 +100,12 @@ View the results of the PTProfiler for a single document. You see the time it ta
         tal:content="python: round(view.total_rendering_time(tmp) / view.total_pt_hits(tmp), 5)">
             Total time per hit
     </td>
+</tr>
+<tr tal:define="time python: view.total_expression_time(request['tmp']); hits python: view.total_expression_hits(request['tmp']); time_per_hit python: time / hits">
+    <td class="form-element" style="font-weight: bold">All expressions</td>
+    <td class="form-element" style="font-weight: bold" tal:content="python: round(time, 4)">Total time</td>
+    <td class="form-element" style="font-weight: bold" tal:content="hits">Total calls</td>
+    <td class="form-element" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
 </tr>
 <tr tal:repeat="expr result">
     <td class="form-element" tal:content="python: expr[0]">Expression</td>
