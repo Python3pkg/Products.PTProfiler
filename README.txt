@@ -1,18 +1,17 @@
-Copyright (c) 2003 Infrae. All rights reserved.
+Copyright (c) 2003-2005 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
   
-    Valid for:  PTProfiler 0.1 
+    Valid for:  PTProfiler 0.3
     Author:     Guido Wesdorp
     Email:      guido@infrae.com
-    CVS:        $Revision: 1.2 $
+    CVS:        $Revision: 1.3 $
 
 PTProfiler
 
     PTProfiler is a small profiling system for pagetemplates. It times each
-    call to Python expressions, path expressions and string expressions and
-    shows the results on a webpage.
+    TAL expression and shows the results on a webpage.
 
 Installing PTProfiler
 
@@ -21,15 +20,15 @@ Installing PTProfiler
 Using PTProfiler
 
     To use the profiler on a site, just place the product in Zope's Products
-    directory. From that moment on, the website will be profiled. Do mind that
-    this requires some extra processing time for pagetemplates, so isn't 
-    recommended for production sites.
-    To view the results, place a 'PTProfiler Viewer' object somewhere in the
-    Zope tree and view it through the ZMI. You will see a list of paths to
-    pagetemplates (or, in the rare case the path isn't known, the id), all of
-    which are clickable. When you click one of the items, you will see a
-    list of all the expression calls in the template, ordered by total time 
-    spent on that expression.
+    directory. Do mind that this product (when enabled, see below) requires
+    some extra processing time for pagetemplates, so isn't recommended for
+    production sites.
+    To enable profiling and view the results, place a 'PTProfiler Viewer'
+    object somewhere in the Zope tree, and press the 'Enable'. After some
+    pagetemplates are viewed, you will see a list of paths to each of those
+    pagetemplates (or, in the rare case the path isn't known, the id). When you
+    click one of the items, you will see a list of all the expression calls in
+    the template, ordered by total time spent on that expression.
 
 License
   

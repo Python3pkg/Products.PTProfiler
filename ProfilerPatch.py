@@ -6,8 +6,7 @@ import time
 import os
 
 # This variable is used to disable or enable profiling
-# It is a list so it can be changed from other modules and read here
-enable = [1]
+enabled = 1
 
 #-----------------------------------------------------------------------------
 # Expressions
@@ -16,10 +15,10 @@ enable = [1]
 def __patched_call__(self, econtext):
     """The patched method for expressions
     """
-    global enable
+    global enabled
     
     name = self._patching_class._get_name(econtext)
-    if enable[0] and name and not name.find(os.path.dirname(__file__)) > -1:
+    if enabled and name and not name.find(os.path.dirname(__file__)) > -1:
         expr = self._patching_class._get_expr(self)
         starttime = time.clock()
         ret = self._patching_class._org_method(self, econtext)
@@ -56,11 +55,11 @@ class ExprProfilerPatch:
 #-----------------------------------------------------------------------------
 
 def __patched_render__(self, source=0, extra_context={}):
-    global enable
+    global enabled
     
     name = self._patching_class._get_name(self)
     # don't profile if profiling is disabled and don't profile our own pts
-    if enable[0] and not name.find(os.path.dirname(__file__)) > -1:
+    if enabled and not name.find(os.path.dirname(__file__)) > -1:
         starttime = time.clock()
         try:
             ret = self._patching_class._org_method(self, source, extra_context)

@@ -16,7 +16,7 @@ Of course this is also used to register the product code to Zope
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.10 $
+Version of this file: $Revision: 1.11 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
@@ -91,15 +91,15 @@ class PTProfilerViewer(SimpleItem):
 
     security.declareProtected(_perm, 'enable')
     def enable(self):
-        ProfilerPatch.enable[0] = 1
+        ProfilerPatch.enabled = 1
 
     security.declareProtected(_perm, 'disable')
     def disable(self):
-        ProfilerPatch.enable[0] = 0
+        ProfilerPatch.enabled = 0
 
     security.declareProtected(_perm, 'enabled')
     def enabled(self):
-        return ProfilerPatch.enable[0]
+        return ProfilerPatch.enabled
 
     def _sort_by_time(self, a, b):
         return cmp(b[1], a[1])
