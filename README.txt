@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  PTProfiler 0.1 
-  Author:     Guido Wesdorp
-  Email:      guido@infrae.com
-  CVS:        $Revision: 1.1 $
+    Valid for:  PTProfiler 0.1 
+    Author:     Guido Wesdorp
+    Email:      guido@infrae.com
+    CVS:        $Revision: 1.2 $
 
 PTProfiler
 
@@ -16,7 +16,7 @@ PTProfiler
 
 Installing PTProfiler
 
-  See INSTALL.txt
+    See INSTALL.txt
 
 Using PTProfiler
 
@@ -33,4 +33,4 @@ Using PTProfiler
 
 License
   
-  PTProfiler is released under the BSD license. See 'LICENSE.txt'.
+    PTProfiler is released under the BSD license. See 'LICENSE.txt'.

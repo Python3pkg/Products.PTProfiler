@@ -1,13 +1,22 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
 <tal:define define="global view here;
                     global request view/REQUEST;
+                    global enabled view/enabled;
                     " />
+
+<tal:block condition="python: enabled and request.has_key('switch_enabled') and request['switch_enabled'] == '0'">
+  <tal:expr define="dummy view/disable; global enabled python:0" />
+</tal:block>
+
+<tal:block condition="python: not enabled and request.has_key('switch_enabled') and request['switch_enabled'] == '1'">
+  <tal:expr define="dummy view/enable; global enabled python:1" />
+</tal:block>
 
 <tal:condition condition="python: view.REQUEST.has_key('clear')">
   <tal:define define="dummy python: view.clear()" />
@@ -26,6 +35,13 @@ E-mail: guido@infrae.com
   <h2 tal:define="form_title python:'View PTProfiler - Details of %s' % request['tmp']"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 </tal:condition>
+
+<br />
+<form method="post" action="" class="form-text">
+  Profiling is currently <b tal:content="python: test(enabled, 'enabled', 'disabled')" /><br />
+  <input type="hidden" name="switch_enabled" tal:attributes="value python: test(enabled, '0', '1')" />
+  <input class="form-element" type="submit" tal:attributes="value python: test(enabled, 'Disable', 'Enable')" />
+</form>
 
 <p class="form-help" tal:condition="python: not request.has_key('tmp')">
 View the results of the PTProfiler. Shows a list of (clickable) items that are
@@ -95,6 +111,6 @@ View the results of the PTProfiler for a single document. You see the time it ta
 </tal:define>
 </tal:block>
 
-<form><input type="button" onClick="javascript: document.location = '?clear=1'" value="Clear" /></form>
+<form><input class="form-element" type="button" onClick="javascript: document.location = '?clear=1'" value="Clear results" /></form>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>

@@ -6,6 +6,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
 from ProfileContainer import profile_container
+import ProfilerPatch
 
 """Here the actual patching of the expression calls takes place
 
@@ -15,7 +16,7 @@ Of course this is also used to register the product code to Zope
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.7 $
+Version of this file: $Revision: 1.8 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
@@ -71,6 +72,22 @@ class PTProfilerViewer(SimpleItem):
     security.declareProtected(_perm, 'clear')
     def clear(self):
         profile_container.clear()
+
+    security.declareProtected(_perm, 'enable')
+    def enable(self):
+        print 'Called enable'
+        ProfilerPatch.enable[0] = 1
+        print 'Enabled:', ProfilerPatch.enable[0]
+
+    security.declareProtected(_perm, 'disable')
+    def disable(self):
+        print 'Called disable'
+        ProfilerPatch.enable[0] = 0
+        print 'Enalbed:', ProfilerPatch.enable[0]
+
+    security.declareProtected(_perm, 'enabled')
+    def enabled(self):
+        return ProfilerPatch.enable[0]
 
     def _sort_by_time(self, a, b):
         return cmp(b[1], a[1])

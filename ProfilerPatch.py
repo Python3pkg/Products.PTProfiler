@@ -5,6 +5,10 @@ from ProfileContainer import profile_container
 import time
 import os
 
+# This variable is used to disable or enable profiling
+# It is a list so it can be changed from other modules and read here
+enable = [1]
+
 #-----------------------------------------------------------------------------
 # Expressions
 #-----------------------------------------------------------------------------
@@ -12,14 +16,16 @@ import os
 def __patched_call__(self, econtext):
     """The patched method for expressions
     """
+    global enable
+    
     name = self._patching_class._get_name(econtext)
-    if name and not name.find(os.path.dirname(__file__)) > -1:
+    if enable[0] and name and not name.find(os.path.dirname(__file__)) > -1:
         expr = self._patching_class._get_expr(self)
         starttime = time.time()
         ret = self._patching_class._org_method(self, econtext)
         profile_container.expr_hit(name, expr, time.time() - starttime)
     else:
-        # not a pagetemplate or one of the profiler's pts, so don't time
+        # not a pagetemplate or one of the profiler's pts, or profiling is disabled, so don't time
         ret = self._patching_class._org_method(self, econtext)
 
     return ret
@@ -50,8 +56,11 @@ class ExprProfilerPatch:
 #-----------------------------------------------------------------------------
 
 def __patched_render__(self, source=0, extra_context={}):
+    global enable
+    
     name = self._patching_class._get_name(self)
-    if not name.find(os.path.dirname(__file__)) > -1:
+    # don't profile if profiling is disabled and don't profile our own pts
+    if enable[0] and not name.find(os.path.dirname(__file__)) > -1:
         starttime = time.time()
         try:
             ret = self._patching_class._org_method(self, source, extra_context)
