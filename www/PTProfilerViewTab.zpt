@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.7 $
+Version of this file: $Revision: 1.8 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -40,7 +40,7 @@ E-mail: guido@infrae.com
 <form method="post" action="" class="form-text">
   Profiling is currently <b tal:content="python: test(enabled, 'enabled', 'disabled')" /><br />
   <input type="hidden" name="switch_enabled" tal:attributes="value python: test(enabled, '0', '1')" />
-  <input class="form-element" type="submit" tal:attributes="value python: test(enabled, 'Disable', 'Enable')" />
+  <input class="form-element form-text" type="submit" tal:attributes="value python: test(enabled, 'Disable', 'Enable')" />
 </form>
 
 <p class="form-help" tal:condition="python: not request.has_key('tmp')">
@@ -65,11 +65,11 @@ View the results of the PTProfiler for a single document. You see the time it ta
 
 <tal:define define="tmps view/profiled_templates; dummy python: tmps.sort()">
 <tr tal:repeat="tmp tmps">
-    <td><a tal:attributes="href python: '?tmp=%s' % tmp" 
-            tal:content="tmp" class="form-element">Template name</a></td>
-    <td tal:content="python: round(view.total_rendering_time(tmp), 4)" class="form-element" tal:on-error="string:Running">Total time</td>
-    <td tal:content="python: view.total_pt_hits(tmp)" class="form-element" tal:on-error="string:Running">Total hits</td>
-    <td tal:content="python: round(view.total_rendering_time(tmp) / view.total_pt_hits(tmp), 4)" class="form-element" tal:on-error="string:Running">Time per hit</td>
+    <td><a class="form-text" tal:attributes="href python: '?tmp=%s' % tmp" 
+            tal:content="tmp">Template name</a></td>
+    <td class="form-text" tal:content="python: round(view.total_rendering_time(tmp), 4)" tal:on-error="string:Running">Total time</td>
+    <td class="form-text" tal:content="python: view.total_pt_hits(tmp)" tal:on-error="string:Running">Total hits</td>
+    <td class="form-text" tal:content="python: round(view.total_rendering_time(tmp) / view.total_pt_hits(tmp), 4)" tal:on-error="string:Running">Time per hit</td>
 </tr>
 </tal:define>
 </table>
@@ -103,24 +103,24 @@ View the results of the PTProfiler for a single document. You see the time it ta
     </td>
 </tr>
 <tr tal:define="time python: view.total_expression_time(request['tmp']); hits python: view.total_expression_hits(request['tmp']); time_per_hit python: time / hits">
-    <td class="form-element" style="font-weight: bold">All expressions</td>
-    <td class="form-element" style="font-weight: bold" tal:content="python: round(time, 4)">Total time</td>
-    <td class="form-element" style="font-weight: bold" tal:content="hits">Total calls</td>
-    <td class="form-element" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
+    <td class="form-text" style="font-weight: bold">All expressions</td>
+    <td class="form-text" style="font-weight: bold" tal:content="python: round(time, 4)">Total time</td>
+    <td class="form-text" style="font-weight: bold" tal:content="hits">Total calls</td>
+    <td class="form-text" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
 </tr>
 <tr tal:repeat="expr result">
     <tal:block define="colors python:{'python': 'purple', 'path': 'blue', 'string': 'green'}; 
                         color python:test(expr[0].find(':') > -1, colors.get(expr[0].split(':')[0], 'black'), 'noexpr')">
-        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: expr[0]">Expression</td>
-        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1], 4)">Total time</td>
-        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: expr[2]">Total calls</td>
-        <td class="form-element" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
+        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[0]">Expression</td>
+        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1], 4)">Total time</td>
+        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[2]">Total calls</td>
+        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
     </tal:block>
 </tr>
 </table>
 </tal:define>
 </tal:block>
 
-<form><input class="form-element" type="button" onClick="javascript: document.location = '?clear=1'" value="Clear results" /></form>
+<form><input class="form-element form-text" type="button" onclick="document.location = '?clear=1'" value="Clear results" /></form>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
