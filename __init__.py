@@ -4,7 +4,7 @@
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
@@ -12,10 +12,14 @@ E-mail: guido@infrae.com
 import time
 
 class ProfileContainer:
+    """The container (nested dict) for the profiling result
+    """
     def __init__(self):
         self._templates = {}
 
     def hit(self, templatename, expr, time):
+        """Add the data of a hit to the dict
+        """
         if not self._templates.has_key(templatename):
             self._templates[templatename] = {}
 
@@ -29,54 +33,59 @@ class ProfileContainer:
             template[expr]['time'] += time
             template[expr]['hits'] += 1
 
+# create a global instance of the container
 profile_container = ProfileContainer()
 
-old_pyexpr_call = None
-old_pathexpr_call = None
-old_stringexpr_call = None
+def __patched_call__(self, econtext):
+    """The actual patched method
 
-def pyexpr_profiling_call(self, econtext):
-    if econtext.contexts.has_key('form'):
-        name = getattr(econtext.contexts['form'], '_filepath', 'None') or getattr(econtext.contexts['form'], 'id')
-    else:
-        name = getattr(econtext.contexts['template'], '_filepath', None) or getattr(econtext.contexts['template'], 'filename', None) or getattr(econtext.contexts['template'], 'id')
+    Doesn't do much more than recording the time calling an expression takes
+    """
+    name = self._patching_class._get_name(econtext)
+    expr = self._patching_class._get_expr(self)
     starttime = time.time()
-    ret = old_pyexpr_call(self, econtext)
-    profile_container.hit(name, 'python: ' + self.expr, (time.time() - starttime))
-    return ret
-    
-def pathexpr_profiling_call(self, econtext):
-    if econtext.contexts.has_key('form'):
-        name = getattr(econtext.contexts['form'], '_filepath', 'None') or getattr(econtext.contexts['form'], 'id')
-    else:
-        name = getattr(econtext.contexts['template'], '_filepath', None) or getattr(econtext.contexts['template'], 'filename', None) or getattr(econtext.contexts['template'], 'id')
-    starttime = time.time()
-    ret = old_pathexpr_call(self, econtext)
-    profile_container.hit(name, 'path: ' + self._s, (time.time() - starttime))
+    ret = self._patching_class._org_method(self, econtext)
+    profile_container.hit(name, expr, time.time() - starttime)
+
     return ret
 
-def stringexpr_profiling_call(self, econtext):
-    if econtext.contexts.has_key('form'):
-        name = getattr(econtext.contexts['form'], '_filepath', 'None') or getattr(econtext.contexts['form'], 'id')
-    else:
-        name = getattr(econtext.contexts['template'], '_filepath', None) or getattr(econtext.contexts['template'], 'filename', None) or getattr(econtext.contexts['template'], 'id')
-    starttime = time.time()
-    ret = old_stringexpr_call(self, econtext)
-    profile_container.hit(name, 'string: ' + self._s, (time.time() - starttime))
-    return ret
+class ProfilerPatch:
+    """A generic class to hook into expression objects
+    """
+    def __init__(self, type, class_to_patch):
+        self._type = type
+        self._org_method = class_to_patch.__call__
+        class_to_patch.__call__ = __patched_call__
+        class_to_patch._patching_class = self
 
+    def _get_name(self, econtext):
+        if econtext.contexts.has_key('template'):
+            name = getattr(econtext.contexts['template'], '_filepath', None) or getattr(econtext.contexts['template'], 'filename', None) or getattr(econtext.contexts['template'], 'id')
+        else:
+            name = getattr(econtext.contexts['form'], '_filepath', 'None') or getattr(econtext.contexts['form'], 'id')
+        return name
+
+    def _get_expr(self, obj):
+        if self._type == 'python':
+            return 'python: %s' % obj.expr
+        else:
+            return '%s: %s' % (self._type, obj._s)
+
+# here the actual monkeypatching takes place
 from Products.PageTemplates.ZRPythonExpr import PythonExpr
-old_pyexpr_call = PythonExpr.__call__
-PythonExpr.__call__ = pyexpr_profiling_call
+ProfilerPatch('python', PythonExpr)
 
 from Products.PageTemplates.Expressions import PathExpr
-old_pathexpr_call = PathExpr.__call__
-PathExpr.__call__ = pathexpr_profiling_call
+ProfilerPatch('path', PathExpr)
 
 from Products.PageTemplates.Expressions import StringExpr
-old_stringexpr_call = StringExpr.__call__
-StringExpr.__call__ = stringexpr_profiling_call
+ProfilerPatch('string', StringExpr)
 
+#-----------------------------------------------------------------------------
+# Plain Zope Product registration
+#-----------------------------------------------------------------------------
+
+# of course we have some registration to Zope to do here as well...
 import PTProfilerViewer
 
 def initialize(context):
