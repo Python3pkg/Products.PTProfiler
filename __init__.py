@@ -4,18 +4,22 @@ classes to measure the speed of individual expressions
 
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.3 $
+Version of this file: $Revision: 1.4 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
 
-# import the profiling machinery and monkeypatch the expression objects
-from ProfilerPatch import ProfilerPatch
+# import the profiling machinery and monkeypatch the objects
+from ProfilerPatch import ExprProfilerPatch, PTProfilerPatch
+
+from Products.PageTemplates.PageTemplate import PageTemplate
+PTProfilerPatch(PageTemplate)
+
 from Products.PageTemplates.ZRPythonExpr import PythonExpr
 from Products.PageTemplates.Expressions import PathExpr, StringExpr
-ProfilerPatch('python', PythonExpr)
-ProfilerPatch('path', PathExpr)
-ProfilerPatch('string', StringExpr)
+ExprProfilerPatch('python', PythonExpr)
+ExprProfilerPatch('path', PathExpr)
+ExprProfilerPatch('string', StringExpr)
 
 
 import PTProfilerViewer

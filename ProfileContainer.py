@@ -7,7 +7,7 @@ class ProfileContainer:
     def __init__(self):
         self._templates = {}
 
-    def hit(self, templatename, expr, time):
+    def expr_hit(self, templatename, expr, time):
         """Add the data of a hit to the dict
         """
         if not self._templates.has_key(templatename):
@@ -22,6 +22,21 @@ class ProfileContainer:
         else:
             template[expr]['time'] += time
             template[expr]['hits'] += 1
+
+    def pt_hit(self, templatename, time):
+        if not self._templates.has_key(templatename):
+            self._templates[templatename] = {}
+
+        template = self._templates[templatename]
+
+        key = 'Total rendering time'
+        if not template.has_key(key):
+            template[key] = {}
+            template[key]['time'] = time
+            template[key]['hits'] = 1
+        else:
+            template[key]['time'] += time
+            template[key]['hits'] += 1
 
 # create a global instance of the container
 profile_container = ProfileContainer()
