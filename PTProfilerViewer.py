@@ -14,7 +14,7 @@ Of course this is also used to register the product code to Zope
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.4 $
+Version of this file: $Revision: 1.5 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
@@ -66,6 +66,10 @@ class PTProfilerViewer(SimpleItem):
     security.declareProtected(_perm, 'total_pt_hits')
     def total_pt_hits(self, ptname):
         return profile_container._templates[ptname]['total']['hits']
+
+    security.declareProtected(_perm, 'clear')
+    def clear(self):
+        profile_container.clear()
 
     def _sort_by_time(self, a, b):
         return cmp(b[1], a[1])

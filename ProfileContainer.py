@@ -38,6 +38,9 @@ class ProfileContainer:
             template[key]['time'] += time
             template[key]['hits'] += 1
 
+    def clear(self):
+        self._templates = {}
+
 # create a global instance of the container
 profile_container = ProfileContainer()
 
