@@ -1,3 +1,5 @@
+import urllib
+
 import Globals
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
@@ -13,7 +15,7 @@ Of course this is also used to register the product code to Zope
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.6 $
+Version of this file: $Revision: 1.7 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
