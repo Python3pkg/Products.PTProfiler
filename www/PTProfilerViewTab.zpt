@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1 $
+Version of this file: $Revision: 1.2 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -14,13 +14,23 @@ E-mail: guido@infrae.com
 <span tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</span>
 
-<h2 tal:define="form_title string:View PTProfiler"
+<h2 tal:define="form_title string:View PTProfiler - Overview of pagetemplates" 
+    tal:condition="python: not request.has_key('tmp')"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
-<p class="form-help">
+<tal:condition condition="python: request.has_key('tmp')">
+  <h2 tal:define="form_title python:'View PTProfiler - Details of %s' % request['tmp']"
+    tal:replace="structure here/manage_form_title">Form Title</h2>
+</tal:condition>
+
+<p class="form-help" tal:condition="python: not request.has_key('tmp')">
 View the results of the PTProfiler. Shows a list of (clickable) items that are
 profiled by the profiler, you can click each item to see the profiled results
 for each expression in the template.
+</p>
+
+<p class="form-help" tal:condition="python: request.has_key('tmp')">
+View the results of the PTProfiler for a single document. You see the time it takes for each expression call.
 </p>
 
 <tal:block condition="python: not request.has_key('tmp')">
@@ -42,7 +52,6 @@ for each expression in the template.
 </tal:block>
 
 <tal:block condition="python: request.has_key('tmp')">
-<a tal:attributes="href string:./manage_main">Back to overview</a>
 <table width="100%" border="1">
 <tr>
     <th>Expression</th>
