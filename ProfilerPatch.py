@@ -3,6 +3,7 @@
 
 from ProfileContainer import profile_container
 import time
+import os
 
 #-----------------------------------------------------------------------------
 # Expressions
@@ -12,13 +13,13 @@ def __patched_call__(self, econtext):
     """The patched method for expressions
     """
     name = self._patching_class._get_name(econtext)
-    if name:
+    if name and not name.find(os.path.dirname(__file__)) > -1:
         expr = self._patching_class._get_expr(self)
         starttime = time.time()
         ret = self._patching_class._org_method(self, econtext)
         profile_container.expr_hit(name, expr, time.time() - starttime)
     else:
-        # not a pagetemplate, so don't time
+        # not a pagetemplate or one of the profiler's pts, so don't time
         ret = self._patching_class._org_method(self, econtext)
 
     return ret
@@ -50,10 +51,14 @@ class ExprProfilerPatch:
 
 def __patched_render__(self, source=0, extra_context={}):
     name = self._patching_class._get_name(self)
-    expr = 'Total pagetemplate rendering time'
-    starttime = time.time()
-    ret = self._patching_class._org_method(self, source, extra_context)
-    profile_container.pt_hit(name, time.time() - starttime)
+    if not name.find(os.path.dirname(__file__)) > -1:
+        starttime = time.time()
+        try:
+            ret = self._patching_class._org_method(self, source, extra_context)
+        finally:
+            profile_container.pt_hit(name, time.time() - starttime)
+    else:
+        ret = self._patching_class._org_method(self, source, extra_context)
 
     return ret
 

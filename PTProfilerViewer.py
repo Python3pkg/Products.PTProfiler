@@ -14,7 +14,7 @@ Of course this is also used to register the product code to Zope
 """
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
@@ -48,7 +48,8 @@ class PTProfilerViewer(SimpleItem):
 
         ret = []
         for expr, value in res.items():
-            ret.append((expr, value['time'], value['hits']))
+            if not expr == 'total':
+                ret.append((expr, value['time'], value['hits']))
 
         ret.sort(self._sort_by_time)
 
@@ -58,15 +59,13 @@ class PTProfilerViewer(SimpleItem):
     def profiled_templates(self):
         return profile_container._templates.keys()
 
-    security.declareProtected(_perm, 'total_expressions_time')
-    def total_expressions_time(self, ptname):
-        total = 0.0
-        template = profile_container._templates[ptname]
+    security.declareProtected(_perm, 'total_rendering_time')
+    def total_rendering_time(self, ptname):
+        return profile_container._templates[ptname]['total']['time']
 
-        for expr, res in template.items():
-            total += res['time'] / res['hits']
-
-        return total
+    security.declareProtected(_perm, 'total_pt_hits')
+    def total_pt_hits(self, ptname):
+        return profile_container._templates[ptname]['total']['hits']
 
     def _sort_by_time(self, a, b):
         return cmp(b[1], a[1])

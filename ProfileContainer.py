@@ -29,7 +29,7 @@ class ProfileContainer:
 
         template = self._templates[templatename]
 
-        key = 'Total rendering time'
+        key = 'total'
         if not template.has_key(key):
             template[key] = {}
             template[key]['time'] = time

@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.2 $
+Version of this file: $Revision: 1.3 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -38,20 +38,25 @@ View the results of the PTProfiler for a single document. You see the time it ta
 <table width="100%" border="1">
 <tr>
     <th>Template</th>
-    <th>Total time for all expressions</th>
+    <th>Total rendering time</th>
+    <th>Total hits</th>
+    <th>Time per hit</th>
 </tr>
 
 <tal:define define="tmps view/profiled_templates; dummy python: tmps.sort()">
 <tr tal:repeat="tmp tmps">
     <td><a tal:attributes="href python: '?tmp=%s' % tmp" 
             tal:content="tmp" class="form-element">Template name</a></td>
-    <td tal:content="python: '%s seconds' % round(view.total_expressions_time(tmp), 4)" class="form-element">Total time</td>
+    <td tal:content="python: round(view.total_rendering_time(tmp), 4)" class="form-element" tal:on-error="string:Running">Total time</td>
+    <td tal:content="python: view.total_pt_hits(tmp)" class="form-element" tal:on-error="string:Running">Total hits</td>
+    <td tal:content="python: round(view.total_rendering_time(tmp) / view.total_pt_hits(tmp), 4)" class="form-element" tal:on-error="string:Running">Time per hit</td>
 </tr>
 </tal:define>
 </table>
 </tal:block>
 
 <tal:block condition="python: request.has_key('tmp')">
+<tal:define define="result python:view.result_sorted_by_time(request['tmp']); tmp request/tmp">
 <table width="100%" border="1">
 <tr>
     <th>Expression</th>
@@ -59,15 +64,31 @@ View the results of the PTProfiler for a single document. You see the time it ta
     <th>Number of calls</th>
     <th>Time per call</th>
 </tr>
-<tal:define define="result python:view.result_sorted_by_time(request['tmp'])">
+<tr>
+    <td style="font-weight: bold;" class="form-text">
+        Total rendering time
+    </td>
+    <td style="font-weight: bold;" class="form-text"
+        tal:content="python: round(view.total_rendering_time(tmp), 4)">
+            Total rendering time
+    </td>
+    <td style="font-weight: bold;" class="form-text"
+        tal:content="python: view.total_pt_hits(tmp)">
+            Total hits
+    </td>
+    <td style="font-weight: bold;" class="form-text"
+        tal:content="python: round(view.total_rendering_time(tmp) / view.total_pt_hits(tmp), 5)">
+            Total time per hit
+    </td>
+</tr>
 <tr tal:repeat="expr result">
     <td class="form-element" tal:content="python: expr[0]">Expression</td>
     <td class="form-element" tal:content="python: round(expr[1], 4)">Total time</td>
     <td class="form-element" tal:content="python: expr[2]">Total calls</td>
     <td class="form-element" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
 </tr>
-</tal:define>
 </table>
+</tal:define>
 </tal:block>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
