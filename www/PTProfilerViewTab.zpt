@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.9 $
+Version of this file: $Revision: 1.10 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -47,7 +47,7 @@ for each expression in the template.
 </p>
 
 <p class="form-help" tal:condition="python: request.has_key('tmp')">
-View the results of the PTProfiler for a single document. You see the time it takes for each expression call.
+View the results of the PTProfiler for a single page template. You see the time it takes for each expression call.
 </p>
 
 <tal:block condition="python: not request.has_key('tmp')">
