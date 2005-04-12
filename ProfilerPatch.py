@@ -6,7 +6,7 @@ import time
 import os
 
 # This variable is used to disable or enable profiling
-enabled = 1
+enabled = 0
 
 #-----------------------------------------------------------------------------
 # Expressions
