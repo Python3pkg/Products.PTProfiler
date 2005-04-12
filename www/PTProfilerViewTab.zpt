@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2003 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.10 $
+Version of this file: $Revision: 1.11 $
 Written by Guido Wesdorp
 E-mail: guido@infrae.com
 -->
@@ -118,6 +118,9 @@ View the results of the PTProfiler for a single page template. You see the time 
 </tal:define>
 </tal:block>
 
-<form><input class="form-element form-text" type="button" onclick="document.location = '?clear=1'" value="Clear results" /></form>
+<form action="" method="POST">
+  <input class="form-element form-text" type="submit" value="Clear results" />
+  <input type="hidden" name="clear" value="1" />
+</form>
 
 <h1 tal:replace="structure here/manage_page_footer">Footer</h1>
