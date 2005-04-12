@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-    Valid for:  PTProfiler 0.3
+    Valid for:  PTProfiler 1.0b
     Author:     Guido Wesdorp
     Email:      guido@infrae.com
-    CVS:        $Revision: 1.3 $
+    CVS:        $Revision: 1.4 $
 
 PTProfiler
 
