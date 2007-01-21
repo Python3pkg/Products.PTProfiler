@@ -1,11 +1,11 @@
 """
-PTPathProfiler is a small pagetemplate expression profiler that monkeypatches expression
-classes to measure the speed of individual expressions
+PTPathProfiler is a small page template expression profiler that monkey 
+expression classes to measure the speed of individual expressions
 
-Copyright (c) 2003 Infrae. All rights reserved.
+Copyright (c) 2003-2007 Infrae. All rights reserved.
 See also LICENSE.txt
 Version of this file: $Revision: 1.4 $
-Written by Guido Wesdorp
+Written by Guido Wesdorp and other contributors
 E-mail: guido@infrae.com
 """
 
@@ -29,5 +29,5 @@ def initialize(context):
         PTProfilerViewer.PTProfilerViewer,
         constructors=(PTProfilerViewer.manage_addPTProfilerViewerForm,
                       PTProfilerViewer.manage_addPTProfilerViewer),
-        icon='',
+        icon='www/PTP.gif',
         )
