@@ -1,0 +1,18 @@
+Copyright (c) 2003-2007 Infrae. All rights reserved.
+See also LICENSE.txt
+
+PTProfiler changes
+
+1.1
+
+  Features added:
+
+    - Added 'Refresh' button for the overview screen.
+
+    - Added 'Return to overview' button for the introspection screen.
+
+    - Icon for the ZMI.
+
+1.0b
+
+    Initial public release.
