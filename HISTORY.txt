@@ -3,13 +3,12 @@ See also LICENSE.txt
 
 PTProfiler changes
 
-1.1
+1.1 (SVN/UNRELEASED)
 
   Features added:
 
-    - Added 'Refresh' button for the overview screen.
-
-    - Added 'Return to overview' button for the introspection screen.
+    - Usability improvements: added 'Refresh' button for the overview screen 
+      and 'Return to overview' for the introspection screen. Layout tweaks.
 
     - Icon for the ZMI.
 
