@@ -1,9 +1,9 @@
 <!--
-Copyright (c) 2003 Infrae. All rights reserved.
+Copyright (c) 2003-2007 Infrae. All rights reserved.
 See also LICENSE.txt
 Version of this file: $Revision: 1.11 $
 Written by Guido Wesdorp
-E-mail: guido@infrae.com
+E-mail: info@infrae.com
 -->
 <tal:define define="global enabled context/enabled;"/>
 
@@ -24,7 +24,7 @@ E-mail: guido@infrae.com
 <span tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</span>
 
-<h2 tal:define="form_title string:View PTProfiler - Overview of pagetemplates" 
+<h2 tal:define="form_title string:View PTProfiler - Overview of page templates" 
     tal:condition="python: not request.has_key('tmp')"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
@@ -35,29 +35,40 @@ E-mail: guido@infrae.com
 
 <br />
 <form method="post" action="" class="form-text">
-  Profiling is currently <b tal:content="python: test(enabled, 'enabled', 'disabled')" /><br />
   <input type="hidden" name="switch_enabled" tal:attributes="value python: test(enabled, '0', '1')" />
-  <input class="form-element form-text" type="submit" tal:attributes="value python: test(enabled, 'Disable', 'Enable')" />
+  <input class="form-element form-text" style="float:left;margin-right:0.5em" type="submit" 
+    tal:attributes="value python: test(enabled, 'Disable', 'Enable')" />
+  Profiling is currently <b tal:content="python: test(enabled, 'enabled', 'disabled')" />.
 </form>
 
 <p class="form-help" tal:condition="python: not request.has_key('tmp')">
-View the results of the PTProfiler. Shows a list of (clickable) items that are
-profiled by the profiler, you can click each item to see the profiled results
-for each expression in the template.
+<form method="post" action="" class="form-text">
+  <input class="form-element form-text" style="float:left;margin-right:0.5em" type="submit" value="Refresh" />
+View the results of the PTProfiler. Shows a clickable list of items that are
+profiled by the profiler. You can introspect each item to see the profiled 
+results for each expression in the template.
+</form>
 </p>
 
 <p class="form-help" tal:condition="python: request.has_key('tmp')">
-View the results of the PTProfiler for a single page template. You see the time it takes for each expression call.
+<form method="post" action="" class="form-text">
+  <input class="form-element form-text" type="submit" value="Return to overview..." /><br />
+</form>
+</p>
+
+<p class="form-help" tal:condition="python: request.has_key('tmp')">
+View the results of the PTProfiler for a single page template. You'll see the time 
+it takes for each expression call.
 </p>
 
 <tal:block condition="python: not request.has_key('tmp')">
 <tal:comment condition="nothing"> Show a list of all profiled pts </tal:comment>
 <table width="100%" border="1">
 <tr>
-    <th>Template</th>
-    <th>Total rendering time</th>
-    <th>Total hits</th>
-    <th>Time per hit</th>
+    <th align="left">Template</th>
+    <th align="left">Total rendering time</th>
+    <th align="left">Total hits</th>
+    <th align="left">Time per hit</th>
 </tr>
 
 <tal:define define="tmps context/profiled_templates; dummy python: tmps.sort()">
@@ -77,14 +88,14 @@ View the results of the PTProfiler for a single page template. You see the time 
 <tal:define define="result python:context.result_sorted_by_time(request['tmp']); tmp request/tmp">
 <table width="100%" border="1">
 <tr>
-    <th>Expression</th>
-    <th>Total time</th>
-    <th>Number of calls</th>
-    <th>Time per call</th>
+    <th align="left">Expression</th>
+    <th align="left">Total time</th>
+    <th align="left">Number of calls</th>
+    <th align="left">Time per call</th>
 </tr>
 <tr>
     <td style="font-weight: bold;" class="form-text">
-        Total rendering time pagetemplate
+        Total rendering time for page template
     </td>
     <td style="font-weight: bold;" class="form-text"
         tal:content="python: round(context.total_rendering_time(tmp), 4)">
