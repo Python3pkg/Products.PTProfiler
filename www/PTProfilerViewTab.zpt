@@ -21,11 +21,11 @@ E-mail: info@infrae.com
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <span tal:define="manage_tabs_message options/manage_tabs_message | nothing"
-    tal:replace="structure here/manage_tabs">Tabs</span>
+  tal:replace="structure here/manage_tabs">Tabs</span>
 
 <h2 tal:define="form_title string:View PTProfiler - Overview of page templates" 
-    tal:condition="python: not request.has_key('tmp')"
-    tal:replace="structure here/manage_form_title">Form Title</h2>
+  tal:condition="python: not request.has_key('tmp')"
+  tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <tal:condition condition="python: request.has_key('tmp')">
   <h2 tal:define="form_title python:'View PTProfiler - Details of %s' % request['tmp']"
@@ -35,7 +35,7 @@ E-mail: info@infrae.com
 <table border="1" style="float:right; margin-top:1em" tal:condition="python: request.has_key('tmp')">
   <tbody>
     <tr><th>Legend</th></tr>
-    <tr><td><p  class="form-help">
+    <tr><td><p class="form-help">
       <span style="color:blue">path</span><br />
       <span style="color:purple">python</span><br />
       <span style="color:green">string</span>
@@ -75,19 +75,19 @@ it takes for each expression call.
 <tal:comment condition="nothing"> Show a list of all profiled pts </tal:comment>
 <table width="100%" border="1">
 <tr>
-    <th align="left">Template</th>
-    <th align="left">Total rendering time</th>
-    <th align="left">Total hits</th>
-    <th align="left">Time per hit</th>
+  <th align="left">Template</th>
+  <th align="left">Total rendering time</th>
+  <th align="left">Total hits</th>
+  <th align="left">Time per hit</th>
 </tr>
 
 <tal:define define="tmps context/profiled_templates; dummy python: tmps.sort()">
 <tr tal:repeat="tmp tmps">
-    <td><a class="form-text" tal:attributes="href python: '?tmp=%s' % tmp" 
-            tal:content="tmp">Template name</a></td>
-    <td class="form-text" tal:content="python: round(context.total_rendering_time(tmp), 4)" tal:on-error="string:Running">Total time</td>
-    <td class="form-text" tal:content="python: context.total_pt_hits(tmp)" tal:on-error="string:Running">Total hits</td>
-    <td class="form-text" tal:content="python: round(context.total_rendering_time(tmp) / context.total_pt_hits(tmp), 4)" tal:on-error="string:Running">Time per hit</td>
+  <td><a class="form-text" tal:attributes="href python: '?tmp=%s' % tmp" 
+          tal:content="tmp">Template name</a></td>
+  <td class="form-text" tal:content="python: round(context.total_rendering_time(tmp), 4)" tal:on-error="string:Running">Total time</td>
+  <td class="form-text" tal:content="python: context.total_pt_hits(tmp)" tal:on-error="string:Running">Total hits</td>
+  <td class="form-text" tal:content="python: round(context.total_rendering_time(tmp) / context.total_pt_hits(tmp), 4)" tal:on-error="string:Running">Time per hit</td>
 </tr>
 </tal:define>
 </table>
@@ -98,42 +98,42 @@ it takes for each expression call.
 <tal:define define="result python:context.result_sorted_by_time(request['tmp']); tmp request/tmp">
 <table width="100%" border="1">
 <tr>
-    <th align="left">Expression</th>
-    <th align="left">Total time</th>
-    <th align="left">Number of calls</th>
-    <th align="left">Time per call</th>
+  <th align="left">Expression</th>
+  <th align="left">Total time</th>
+  <th align="left">Number of calls</th>
+  <th align="left">Time per call</th>
 </tr>
 <tr>
-    <td style="font-weight: bold;" class="form-text">
-        Total rendering time for page template
-    </td>
-    <td style="font-weight: bold;" class="form-text"
-        tal:content="python: round(context.total_rendering_time(tmp), 4)">
-            Total rendering time
-    </td>
-    <td style="font-weight: bold;" class="form-text"
-        tal:content="python: context.total_pt_hits(tmp)">
-            Total hits
-    </td>
-    <td style="font-weight: bold;" class="form-text"
-        tal:content="python: round(context.total_rendering_time(tmp) / context.total_pt_hits(tmp), 5)">
-            Total time per hit
-    </td>
+  <td style="font-weight: bold;" class="form-text">
+    Total rendering time for page template
+  </td>
+  <td style="font-weight: bold;" class="form-text"
+    tal:content="python: round(context.total_rendering_time(tmp), 4)">
+    Total rendering time
+  </td>
+  <td style="font-weight: bold;" class="form-text"
+    tal:content="python: context.total_pt_hits(tmp)">
+    Total hits
+  </td>
+  <td style="font-weight: bold;" class="form-text"
+    tal:content="python: round(context.total_rendering_time(tmp) / context.total_pt_hits(tmp), 5)">
+    Total time per hit
+  </td>
 </tr>
 <tr tal:define="time python: context.total_expression_time(request['tmp']); hits python: context.total_expression_hits(request['tmp']); time_per_hit python: time / hits">
-    <td class="form-text" style="font-weight: bold">All expressions</td>
-    <td class="form-text" style="font-weight: bold" tal:content="python: round(time, 4)">Total time</td>
-    <td class="form-text" style="font-weight: bold" tal:content="hits">Total calls</td>
-    <td class="form-text" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
+  <td class="form-text" style="font-weight: bold">All expressions</td>
+  <td class="form-text" style="font-weight: bold" tal:content="python: round(time, 4)">Total time</td>
+  <td class="form-text" style="font-weight: bold" tal:content="hits">Total calls</td>
+  <td class="form-text" style="font-weight: bold" tal:content="python: round(time_per_hit, 4)">Time per call</td>
 </tr>
 <tr tal:repeat="expr result">
-    <tal:block define="colors python:{'python': 'purple', 'path': 'blue', 'string': 'green'}; 
-                        color python:test(expr[0].find(':') > -1, colors.get(expr[0].split(':')[0], 'black'), 'noexpr')">
-        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[0]">Expression</td>
-        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1], 4)">Total time</td>
-        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[2]">Total calls</td>
-        <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
-    </tal:block>
+  <tal:block define="colors python:{'python': 'purple', 'path': 'blue', 'string': 'green'}; 
+                     color python:test(expr[0].find(':') > -1, colors.get(expr[0].split(':')[0], 'black'), 'noexpr')">
+    <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[0]">Expression</td>
+    <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1], 4)">Total time</td>
+    <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: expr[2]">Total calls</td>
+    <td class="form-text" tal:attributes="style string:color: ${color}" tal:content="python: round(expr[1] / expr[2], 5)">Time per call</td>
+  </tal:block>
 </tr>
 </table>
 </tal:define>
