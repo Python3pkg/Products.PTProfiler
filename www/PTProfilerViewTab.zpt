@@ -1,8 +1,7 @@
 <!--
 Copyright (c) 2003-2007 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.11 $
-Written by Guido Wesdorp
+Written by Guido Wesdorp and colleagues
 E-mail: info@infrae.com
 -->
 <tal:define define="global enabled context/enabled;"/>
@@ -33,6 +32,17 @@ E-mail: info@infrae.com
     tal:replace="structure here/manage_form_title">Form Title</h2>
 </tal:condition>
 
+<table border="1" style="float:right; margin-top:1em" tal:condition="python: request.has_key('tmp')">
+  <tbody>
+    <tr><th>Legend</th></tr>
+    <tr><td><p  class="form-help">
+      <span style="color:blue">path</span><br />
+      <span style="color:purple">python</span><br />
+      <span style="color:green">string</span>
+    </p></td></tr>
+  </tbody>
+</table>
+
 <br />
 <form method="post" action="" class="form-text">
   <input type="hidden" name="switch_enabled" tal:attributes="value python: test(enabled, '0', '1')" />
@@ -50,10 +60,10 @@ results for each expression in the template.
 </form>
 </p>
 
-<p class="form-help" tal:condition="python: request.has_key('tmp')">
-<form method="post" action="" class="form-text">
-  <input class="form-element form-text" type="submit" value="Return to overview..." /><br />
-</form>
+<p class="form-help">
+  <form method="post" action="" class="form-text">
+    <input class="form-element form-text" type="submit" value="Return to overview..." /><br />
+  </form>
 </p>
 
 <p class="form-help" tal:condition="python: request.has_key('tmp')">
