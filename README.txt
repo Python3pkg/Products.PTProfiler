@@ -1,13 +1,6 @@
 Copyright (c) 2003-2007 Infrae. All rights reserved.
 See also LICENSE.txt
 
-Meta::
-  
-    Valid for:  PTProfiler 1.1
-    Author:     Guido Wesdorp and other contributors
-    Email:      info@infrae.com
-    CVS:        $Revision: 1.4 $
-
 PTProfiler
 
     PTProfiler is a small profiling system for page templates. It times each
@@ -23,6 +16,7 @@ Using PTProfiler
     directory. Do mind that this product (when enabled, see below) requires
     some extra processing time for page templates, so isn't recommended for
     production sites.
+
     To enable profiling and view the results, place a 'PTProfiler Viewer'
     object somewhere in the Zope tree, and press the 'Enable'. After some
     page templates are viewed, you will see a list of paths to each of those
