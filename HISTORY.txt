@@ -3,6 +3,12 @@ See also LICENSE.txt
 
 PTProfiler changes
 
+1.2
+
+  Bugs fixed
+
+    - The "Return to overview" button no longer shows up in the overview.
+
 1.1 
 
   Features added:

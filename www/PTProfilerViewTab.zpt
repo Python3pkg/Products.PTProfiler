@@ -60,7 +60,7 @@ results for each expression in the template.
 </form>
 </p>
 
-<p class="form-help">
+<p class="form-help" tal:condition="python: request.has_key('tmp')">
   <form method="post" action="" class="form-text">
     <input class="form-element form-text" type="submit" value="Return to overview..." /><br />
   </form>
