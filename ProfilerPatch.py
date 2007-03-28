@@ -1,12 +1,16 @@
 """The code used for monkeypatching and time measurement
 """
 
+from zLOG import LOG, INFO
 from ProfileContainer import profile_container
 import time
 import os
 
 # This variable is used to disable or enable profiling
 enabled = 0
+
+def log(msg):
+    LOG('PTProfiler', INFO, msg)
 
 #-----------------------------------------------------------------------------
 # Expressions
@@ -37,6 +41,7 @@ class ExprProfilerPatch:
         self._org_method = class_to_patch.__call__
         class_to_patch.__call__ = __patched_call__
         class_to_patch._patching_class = self
+        log('patch TALES __call__ of expression %s' % type)
 
     def _get_name(self, econtext):
         name = None
@@ -49,6 +54,15 @@ class ExprProfilerPatch:
             return 'python: %s' % obj.expr
         else:
             return '%s: %s' % (self._type, obj._s)
+
+class ExprProfilerPatchZ3(ExprProfilerPatch):
+    
+    def _get_expr(self, obj):
+        if self._type == 'python':
+            return 'python: %s' % obj.text
+        else:
+            return '%s: %s' % (self._type, obj._s)
+
 
 #-----------------------------------------------------------------------------
 # PageTemplates
@@ -77,8 +91,10 @@ class PTProfilerPatch:
         self._org_method = class_to_patch.pt_render
         class_to_patch.pt_render = __patched_render__
         class_to_patch._patching_class = self
+        log('patch Page Templates pt_render')
 
     def _get_name(self, object):
         return (getattr(object, '_filepath', None) or 
                     getattr(object, 'filename', None) or 
                     getattr(object, 'id'))
+

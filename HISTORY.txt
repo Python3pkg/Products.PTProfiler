@@ -4,6 +4,9 @@ See also LICENSE.txt
 PTProfiler changes
 
 1.2
+    - Profiles Five Browser views of Zope 2.8, 2.9
+
+    - Ported to Zope 2.10
 
   Bugs fixed
 
