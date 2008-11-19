@@ -1,33 +1,15 @@
-Copyright (c) 2003-2007 Infrae. All rights reserved.
-See also LICENSE.txt
+Credits
+=======
 
-Meta::
+-  Martijn Faassen <faassen@infrae.com>
 
-  Valid for:  PTProfiler
-  Author:     Guido Wesdorp and other contributors
-  Email:      info@infrae.com
-  CVS:        $Revision: 1.3 $
+-  Jan-Wijbrand Kolman <jw@infrae.com>
 
-PTProfiler was developed by the Infrae team.
-
-Infrae are:
-
-  Kit Blake <kitblake@infrae.com>
-  Eric Casteleijn <eric@infrae.com>
-  Torvald de Boskat <torvald@infrae.com>
-  Wim Boucquaert <wim@infrae.com>
-  Daniel Nouri <daniel@infrae.com>
-  Jasper Op de Coul <jasper@infrae.com>
-
-  Contributing alumni:
-
-    Martijn Faassen <faassen@infrae.com>
-    Jan-Wijbrand Kolman <jw@infrae.com>
-    Guido Wesdorp <guido@infrae.com>
+-  Guido Wesdorp <guido@infrae.com>
 
 Thanks to:
 
-  Godefroid Chapelle <gotcha@bubblenet.be>
-      for porting it to Zope 2.8, 2.9 and 2.10
-  Heimo Laukkanen and Alexander Limi for their positive feedback ;)
-  
+- Godefroid Chapelle <gotcha@bubblenet.be> (for porting it to Zope 2.8, 2.9 and 2.10)
+
+- Heimo Laukkanen and Alexander Limi for their positive feedback ;)
+

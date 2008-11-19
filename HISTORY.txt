@@ -1,28 +1,29 @@
-Copyright (c) 2003-2007 Infrae. All rights reserved.
-See also LICENSE.txt
+Changes
+=======
 
-PTProfiler changes
+PTProfiler 1.3
+--------------
 
-1.3
+- Fix documentation, test in Zope 2.11.
 
-1.2
-    - Profiles Five Browser views of Zope 2.8, 2.9
+PTProfiler 1.2
+--------------
 
-    - Ported to Zope 2.10
+- Profiles Five Browser views of Zope 2.8, 2.9.
 
-  Bugs fixed
+- Ported to Zope 2.10.
 
-    - The "Return to overview" button no longer shows up in the overview.
+- The "Return to overview" button no longer shows up in the overview.
 
-1.1 
+PTProfiler 1.1
+--------------
 
-  Features added:
+- Usability improvements: added *Refresh* button for the overview screen
+  and *Return to overview* for the introspection screen. Layout tweaks.
 
-    - Usability improvements: added 'Refresh' button for the overview screen 
-      and 'Return to overview' for the introspection screen. Layout tweaks.
+- Icon for the ZMI.
 
-    - Icon for the ZMI.
+PTProfiler 1.0b
+---------------
 
-1.0b
-
-    Initial public release.
+- Initial public release.
