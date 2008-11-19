@@ -27,13 +27,13 @@ class PTProfilerViewer(SimpleItem):
 
     security = ClassSecurityInfo()
     meta_type = 'PTProfiler Viewer'
-    
+
     manage_options = ({'label': 'View', 'action': 'view_tab'},) + SimpleItem.manage_options
-    
+
     manage_main = view_tab = PageTemplateFile('www/PTProfilerViewTab', globals(), __name__='view_tab')
 
     _perm = 'View PTProfiler'
-    
+
     security.declareProtected(_perm, 'full_result')
     def full_result(self, name=None):
         res = profile_container._templates

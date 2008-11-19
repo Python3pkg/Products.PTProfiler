@@ -1,8 +1,8 @@
 Changes
 =======
 
-PTProfiler 1.3
---------------
+PTProfiler 1.3 (unreleased)
+---------------------------
 
 - Fix documentation, test in Zope 2.11.
 

@@ -1,12 +1,12 @@
 PTProfiler
-==========
+**********
 
 PTProfiler is a small profiling system for page templates in Zope
 2. It times each TAL expression and lists the results in a table
 ranked by processing time.
 
 Using PTProfiler
-----------------
+================
 
 Do mind that this product (when enabled, see below) requires some
 extra processing time for page templates, so isn't recommended for
