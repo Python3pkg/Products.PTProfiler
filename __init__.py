@@ -1,5 +1,5 @@
 """
-PTPathProfiler is a small page template expression profiler that monkey 
+PTPathProfiler is a small page template expression profiler that monkey
 expression classes to measure the speed of individual expressions
 
 Copyright (c) 2003-2007 Infrae. All rights reserved.
@@ -38,7 +38,7 @@ def initialize(context):
                       PTProfilerViewer.manage_addPTProfilerViewer),
         icon='www/PTP.gif',
         )
-    
+
     pt = PageTemplate()
     if isinstance(pt, PageTemplateZ3):
         TEMPLATES_ARE_Z3 = True
