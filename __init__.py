@@ -16,7 +16,10 @@ from ProfilerPatch import log
 
 from Products.PageTemplates.PageTemplate import PageTemplate
 from Products.PageTemplates.ZRPythonExpr import PythonExpr
-from zope.tales.expressions import PathExpr, StringExpr
+try:
+    from zope.tales.expressions import PathExpr, StringExpr
+except ImportError:
+    from Products.PageTemplates.Expressions import PathExpr, StringExpr
 
 try:
     from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
