@@ -1,6 +1,9 @@
 import urllib
 
-import Globals
+try:
+    from App.class_init import InitializeClass
+except ImportError:
+    from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -28,9 +31,12 @@ class PTProfilerViewer(SimpleItem):
     security = ClassSecurityInfo()
     meta_type = 'PTProfiler Viewer'
 
-    manage_options = ({'label': 'View', 'action': 'view_tab'},) + SimpleItem.manage_options
+    manage_options = (
+        {'label': 'View', 'action': 'view_tab'},
+        ) + SimpleItem.manage_options
 
-    manage_main = view_tab = PageTemplateFile('www/PTProfilerViewTab', globals(), __name__='view_tab')
+    manage_main = view_tab = PageTemplateFile(
+        'www/PTProfilerViewTab', globals(), __name__='view_tab')
 
     _perm = 'View PTProfiler'
 
@@ -104,7 +110,7 @@ class PTProfilerViewer(SimpleItem):
     def _sort_by_time(self, a, b):
         return cmp(b[1], a[1])
 
-Globals.InitializeClass(PTProfilerViewer)
+InitializeClass(PTProfilerViewer)
 
 manage_addPTProfilerViewerForm = PageTemplateFile(
         'www/addPTProfilerViewer', globals(),
