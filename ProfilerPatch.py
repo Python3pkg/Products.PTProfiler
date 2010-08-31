@@ -28,7 +28,8 @@ def __patched_call__(self, econtext):
         ret = self._patching_class._org_method(self, econtext)
         profile_container.expr_hit(name, expr, time.clock() - starttime)
     else:
-        # not a pagetemplate or one of the profiler's pts, or profiling is disabled, so don't time
+        # not a pagetemplate or one of the profiler's pts, or
+        # profiling is disabled, so don't time
         ret = self._patching_class._org_method(self, econtext)
 
     return ret
@@ -46,7 +47,11 @@ class ExprProfilerPatch:
     def _get_name(self, econtext):
         name = None
         if econtext.contexts.has_key('template'):
-            name = getattr(econtext.contexts['template'], '_filepath', None) or getattr(econtext.contexts['template'], 'filename', None) or getattr(econtext.contexts['template'], 'id')
+            template = econtext.contexts['template']
+            name = getattr(template, '_filepath', None) or \
+                getattr(template, 'filename', None) or \
+                getattr(template, 'id', None) or \
+                'unknow'
         return name
 
     def _get_expr(self, obj):
