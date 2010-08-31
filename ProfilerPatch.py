@@ -51,7 +51,7 @@ class ExprProfilerPatch:
             name = getattr(template, '_filepath', None) or \
                 getattr(template, 'filename', None) or \
                 getattr(template, 'id', None) or \
-                'unknow'
+                None
         return name
 
     def _get_expr(self, obj):
