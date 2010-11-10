@@ -23,7 +23,6 @@ except ImportError:
 
 try:
     from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-    from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
     from zope.pagetemplate.pagetemplate import PageTemplate as PageTemplateZ3
 
     from zope.tales.pythonexpr import PythonExpr as PythonExprZ3
@@ -55,7 +54,6 @@ def initialize(context):
         else:
             log('Patching Five page templates...')
             PTProfilerPatch(ZopeTwoPageTemplateFile)
-        PTProfilerPatch(ViewPageTemplateFile)
         log('Patching Z3 TALES engine...')
         ExprProfilerPatchZ3('python', PythonExprZ3)
         ExprProfilerPatchZ3('path', PathExprZ3)
