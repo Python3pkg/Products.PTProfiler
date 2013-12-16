@@ -1,5 +1,6 @@
+==========
 PTProfiler
-**********
+==========
 
 PTProfiler is a small profiling system for page templates in Zope
 2. It times each TAL expression and lists the results in a table
@@ -20,3 +21,9 @@ id). When you click one of the items, you will see a list of all the
 expression calls in the template, ordered by total time spent on that
 expression.
 
+
+Code repository
+===============
+
+You can find the code of this extension in Git:
+https://github.com/infrae/Products.PTProfiler
