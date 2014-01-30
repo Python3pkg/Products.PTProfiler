@@ -9,12 +9,14 @@ import os
 # This variable is used to disable or enable profiling
 enabled = 0
 
+
 def log(msg):
     LOG('PTProfiler', INFO, msg)
 
 #-----------------------------------------------------------------------------
 # Expressions
 #-----------------------------------------------------------------------------
+
 
 def __patched_call__(self, econtext):
     """The patched method for expressions
@@ -33,6 +35,7 @@ def __patched_call__(self, econtext):
         ret = self._patching_class._org_method(self, econtext)
 
     return ret
+
 
 class ExprProfilerPatch:
     """A generic class to hook into expression objects
@@ -93,6 +96,5 @@ class PTProfilerPatch:
 
     def _get_name(self, object):
         return (getattr(object, '_filepath', None) or
-                    getattr(object, 'filename', None) or
-                    getattr(object, 'id'))
-
+                getattr(object, 'filename', None) or
+                getattr(object, 'id'))

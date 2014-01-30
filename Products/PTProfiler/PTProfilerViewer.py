@@ -24,6 +24,7 @@ Written by Guido Wesdorp
 E-mail: guido@infrae.com
 """
 
+
 class PTProfilerViewer(SimpleItem):
     """The view object for the PTProfiler
     """
@@ -33,7 +34,7 @@ class PTProfilerViewer(SimpleItem):
 
     manage_options = (
         {'label': 'View', 'action': 'view_tab'},
-        ) + SimpleItem.manage_options
+    ) + SimpleItem.manage_options
 
     manage_main = view_tab = PageTemplateFile(
         'www/PTProfilerViewTab', globals(), __name__='view_tab')
@@ -41,6 +42,7 @@ class PTProfilerViewer(SimpleItem):
     _perm = 'View PTProfiler'
 
     security.declareProtected(_perm, 'full_result')
+
     def full_result(self, name=None):
         res = profile_container._templates
 
@@ -114,7 +116,8 @@ InitializeClass(PTProfilerViewer)
 
 manage_addPTProfilerViewerForm = PageTemplateFile(
         'www/addPTProfilerViewer', globals(),
-        __name__ = 'manage_addPTProfilerViewerForm')
+        __name__='manage_addPTProfilerViewerForm')
+
 
 def manage_addPTProfilerViewer(self, id, title='', REQUEST=None):
     """Add viewer
