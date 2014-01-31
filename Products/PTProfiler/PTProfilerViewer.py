@@ -1,5 +1,5 @@
 import urllib
-
+from operator import itemgetter
 try:
     from App.class_init import InitializeClass
 except ImportError:
@@ -41,8 +41,11 @@ class PTProfilerViewer(SimpleItem):
 
     _perm = 'View PTProfiler'
 
-    security.declareProtected(_perm, 'full_result')
+    def __init__(self, id, title):
+        self.id = id
+        self.title = title
 
+    security.declareProtected(_perm, 'full_result')
     def full_result(self, name=None):
         res = profile_container._templates
 
@@ -65,9 +68,30 @@ class PTProfilerViewer(SimpleItem):
 
         return ret
 
-    security.declareProtected(_perm, 'profiled_templates')
-    def profiled_templates(self):
-        return profile_container._templates.keys()
+    security.declareProtected(_perm, 'profiled_templates_full')
+    def profiled_templates_full(self):
+        sortby = self.REQUEST.get('sortby', None)
+        result = []
+        for tmpl, info in profile_container._templates.items():
+            total = info.get('total', None)
+            if total is None:
+                time = 'Running'
+                hits = 'Running'
+                per_hit = 'Running'
+            else:
+                time = round(total['time'], 4)
+                hits = total['hits']
+                per_hit = round(time / hits, 4)
+
+            result.append(dict(
+                id=tmpl,
+                time=time,
+                hits=hits,
+                per_hit=per_hit,
+            ))
+        if sortby:
+            result = sorted(result, key=itemgetter(sortby), reverse=True)
+        return result
 
     security.declareProtected(_perm, 'total_rendering_time')
     def total_rendering_time(self, ptname):
