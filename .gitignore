@@ -1,0 +1,7 @@
+.installed.cfg
+Products.PTProfiler.egg-info/
+bin/
+develop-eggs/
+include/
+lib/
+parts/

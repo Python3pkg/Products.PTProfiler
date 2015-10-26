@@ -26,4 +26,8 @@ setup(name='Products.PTProfiler',
       install_requires=[
           'setuptools',
           ],
+      extras_require=dict(
+          test=[
+              'plone.testing',
+          ]),
       )
