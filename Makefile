@@ -1,5 +1,9 @@
 PHONY: plone4.0 plone4.1 plone4.2 plone4.3 plone5.0
 
+ifneq ($(strip $(TRAVIS)),)
+IS_TRAVIS = yes
+endif
+
 ifdef IS_TRAVIS
 
 PIP = pip
