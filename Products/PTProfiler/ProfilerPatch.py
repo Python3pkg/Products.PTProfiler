@@ -9,6 +9,7 @@ import os
 # This variable is used to disable or enable profiling
 enabled = 0
 
+
 def log(msg):
     LOG('PTProfiler', INFO, msg)
 
@@ -16,11 +17,12 @@ def log(msg):
 # Expressions
 #-----------------------------------------------------------------------------
 
+
 def __patched_call__(self, econtext):
     """The patched method for expressions
     """
     global enabled
-    
+
     name = self._patching_class._get_name(econtext)
     if enabled and name and not name.find(os.path.dirname(__file__)) > -1:
         expr = self._patching_class._get_expr(self)
@@ -33,6 +35,7 @@ def __patched_call__(self, econtext):
         ret = self._patching_class._org_method(self, econtext)
 
     return ret
+
 
 class ExprProfilerPatch:
     """A generic class to hook into expression objects
@@ -56,14 +59,6 @@ class ExprProfilerPatch:
 
     def _get_expr(self, obj):
         if self._type == 'python':
-            return 'python: %s' % obj.expr
-        else:
-            return '%s: %s' % (self._type, obj._s)
-
-class ExprProfilerPatchZ3(ExprProfilerPatch):
-    
-    def _get_expr(self, obj):
-        if self._type == 'python':
             return 'python: %s' % obj.text
         else:
             return '%s: %s' % (self._type, obj._s)
@@ -73,21 +68,22 @@ class ExprProfilerPatchZ3(ExprProfilerPatch):
 # PageTemplates
 #-----------------------------------------------------------------------------
 
-def __patched_render__(self, source=0, extra_context={}):
+def __patched_render__(self, namespace, source=False, sourceAnnotations=False, showtal=False):
     global enabled
-    
+
     name = self._patching_class._get_name(self)
     # don't profile if profiling is disabled and don't profile our own pts
     if enabled and not name.find(os.path.dirname(__file__)) > -1:
         starttime = time.clock()
         try:
-            ret = self._patching_class._org_method(self, source, extra_context)
+            ret = self._patching_class._org_method(self, namespace, source, sourceAnnotations, showtal)
         finally:
             profile_container.pt_hit(name, time.clock() - starttime)
     else:
-        ret = self._patching_class._org_method(self, source, extra_context)
+        ret = self._patching_class._org_method(self, namespace, source, sourceAnnotations, showtal)
 
     return ret
+
 
 class PTProfilerPatch:
     """A class to hook into PageTemplates
@@ -99,7 +95,6 @@ class PTProfilerPatch:
         log('patch Page Templates pt_render')
 
     def _get_name(self, object):
-        return (getattr(object, '_filepath', None) or 
-                    getattr(object, 'filename', None) or 
-                    getattr(object, 'id'))
-
+        return (getattr(object, '_filepath', None) or
+                getattr(object, 'filename', None) or
+                getattr(object, 'id'))
