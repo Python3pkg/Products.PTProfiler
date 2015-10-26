@@ -1,0 +1,8 @@
+Changelog
+---------
+
+- Very basic tests and Travis infra
+  [gotcha]
+
+- Zope 2.12 and above comptatibility
+  [naro]
