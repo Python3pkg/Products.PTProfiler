@@ -11,7 +11,7 @@ matrix:
       env: PLONE=4.3
     - python: "2.7"
       env: PLONE=5.0
-install: make plone-$PLONE
+install: make plone$PLONE
 script: ./bin/test
 cache:
   directories:
