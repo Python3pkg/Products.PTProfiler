@@ -6,8 +6,8 @@ version = '1.4.1dev'
 setup(name='Products.PTProfiler',
       version=version,
       description="PageTemplate profiler for Zope 2",
-      long_description=open(os.path.join("Products", "PTProfiler", "README.txt")).read() + "\n" +
-                       open(os.path.join("Products", "PTProfiler", "HISTORY.txt")).read(),
+      long_description=open("README.rst").read() + "\n" +
+                       open("HISTORY.txt").read(),
       classifiers=[
           "Framework :: Zope2",
           "License :: OSI Approved :: BSD License",
