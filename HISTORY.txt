@@ -7,6 +7,9 @@ PTProfiler 1.5 (unreleased)
 - Some tests and Travis infra
   [gotcha]
 
+- Added simple sorting option to main profiler view
+  [naro]
+
 - Zope 2.12 and above comptatibility
   [naro]
 
