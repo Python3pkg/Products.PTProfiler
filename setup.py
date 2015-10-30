@@ -1,17 +1,21 @@
 from setuptools import setup, find_packages
-import os
 
 version = '1.4.1dev'
+
+long_description = (
+    open("README.rst").read() + "\n" + open("HISTORY.txt").read()
+)
 
 setup(name='Products.PTProfiler',
       version=version,
       description="PageTemplate profiler for Zope 2",
-      long_description=open("README.rst").read() + "\n" +
-                       open("HISTORY.txt").read(),
+      long_description=long_description,
       classifiers=[
           "Framework :: Zope2",
           "License :: OSI Approved :: BSD License",
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2.6",
+          "Programming Language :: Python :: 2.7",
           "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       keywords='zope2 page template profiler',
