@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/infrae/Products.PTProfiler.svg
+    :target: https://travis-ci.org/infrae/Products.PTProfiler
+
 ==========
 PTProfiler
 ==========
