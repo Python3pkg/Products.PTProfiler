@@ -4,7 +4,7 @@ Changes
 PTProfiler 1.5 (unreleased)
 ---------------------------
 
-- Very basic tests and Travis infra
+- Some tests and Travis infra
   [gotcha]
 
 - Zope 2.12 and above comptatibility

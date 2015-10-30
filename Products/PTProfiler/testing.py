@@ -16,3 +16,8 @@ class PTProfilerLayer(Layer):
 
 
 PTPROFILER = PTProfilerLayer(name='PTPROFILER')
+
+PTPROFILER_INTEGRATION = z2.IntegrationTesting(
+    bases=(PTPROFILER, ),
+    name='PTPROFILER_INTEGRATION'
+)
