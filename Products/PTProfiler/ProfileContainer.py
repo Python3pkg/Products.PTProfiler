@@ -11,12 +11,12 @@ class ProfileContainer:
     def expr_hit(self, templatename, expr, time):
         """Add the data of a hit to the dict
         """
-        if not self._templates.has_key(templatename):
+        if templatename not in self._templates:
             self._templates[templatename] = {}
 
         template = self._templates[templatename]
 
-        if not template.has_key(expr):
+        if expr not in template:
             template[expr] = {}
             template[expr]['time'] = time
             template[expr]['hits'] = 1
@@ -25,13 +25,13 @@ class ProfileContainer:
             template[expr]['hits'] += 1
 
     def pt_hit(self, templatename, time):
-        if not self._templates.has_key(templatename):
+        if templatename not in self._templates:
             self._templates[templatename] = {}
 
         template = self._templates[templatename]
 
         key = 'total'
-        if not template.has_key(key):
+        if key not in template:
             template[key] = {}
             template[key]['time'] = time
             template[key]['hits'] = 1

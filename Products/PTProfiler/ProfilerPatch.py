@@ -2,7 +2,7 @@
 """
 
 from zLOG import LOG, INFO
-from ProfileContainer import profile_container
+from .ProfileContainer import profile_container
 import time
 import os
 
@@ -49,7 +49,7 @@ class ExprProfilerPatch:
 
     def _get_name(self, econtext):
         name = None
-        if econtext.contexts.has_key('template'):
+        if 'template' in econtext.contexts:
             template = econtext.contexts['template']
             name = getattr(template, '_filepath', None) or \
                 getattr(template, 'filename', None) or \

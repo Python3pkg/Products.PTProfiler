@@ -1,4 +1,4 @@
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from operator import itemgetter
 try:
     from App.class_init import InitializeClass
@@ -8,8 +8,8 @@ from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-from ProfileContainer import profile_container
-import ProfilerPatch
+from .ProfileContainer import profile_container
+from . import ProfilerPatch
 
 """Here the actual patching of the expression calls takes place
 
@@ -60,7 +60,7 @@ class PTProfilerViewer(SimpleItem):
         res = profile_container._templates[name]
 
         ret = []
-        for expr, value in res.items():
+        for expr, value in list(res.items()):
             if not expr == 'total':
                 ret.append((expr, value['time'], value['hits']))
 
@@ -72,7 +72,7 @@ class PTProfilerViewer(SimpleItem):
     def profiled_templates_full(self):
         sortby = self.REQUEST.get('sortby', None)
         result = []
-        for tmpl, info in profile_container._templates.items():
+        for tmpl, info in list(profile_container._templates.items()):
             total = info.get('total', None)
             if total is None:
                 time = 'Running'
@@ -104,7 +104,7 @@ class PTProfilerViewer(SimpleItem):
     security.declareProtected(_perm, 'total_expression_time')
     def total_expression_time(self, ptname):
         total = 0.0
-        for key, value in profile_container._templates[ptname].items():
+        for key, value in list(profile_container._templates[ptname].items()):
             if not key == 'total':
                 total += value['time']
         return total
@@ -112,7 +112,7 @@ class PTProfilerViewer(SimpleItem):
     security.declareProtected(_perm, 'total_expression_hits')
     def total_expression_hits(self, ptname):
         total = 0
-        for key, value in profile_container._templates[ptname].items():
+        for key, value in list(profile_container._templates[ptname].items()):
             if not key == 'total':
                 total += value['hits']
         return total
@@ -153,7 +153,7 @@ def manage_addPTProfilerViewer(self, id, title='', REQUEST=None):
         u = self.DestinationURL()
     except:
         u = REQUEST['URL1']
-    if REQUEST.has_key('submit_edit'):
-        u = '%s/%s' % (u, urllib.quote(id))
+    if 'submit_edit' in REQUEST:
+        u = '%s/%s' % (u, urllib.parse.quote(id))
     REQUEST.RESPONSE.redirect(u + '/manage_main')
     return ''
